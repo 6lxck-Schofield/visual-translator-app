@@ -27,6 +27,7 @@ import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.createBitmap
+import com.example.visusltranslator.OCRTFLite
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import okhttp3.Call
@@ -470,7 +471,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun translateText(textToTranslate: String) {
-        val apiKey = "AIzaSyB-sUjOzTfuTvYzGhwvaPN2LCJMSs-NlG4"
+        val apiKey = BuildConfig.GOOGLE_TRANSLATE_API_KEY
         val url = "https://translation.googleapis.com/language/translate/v2?key=$apiKey"
 
         val jsonBody = JSONObject().apply {

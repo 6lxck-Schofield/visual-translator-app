@@ -1,4 +1,4 @@
-package com.schofielddevs.visuallearning
+package com.example.visusltranslator
 
 import android.content.Context
 import android.graphics.Bitmap

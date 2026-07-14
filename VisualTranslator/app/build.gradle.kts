@@ -1,24 +1,35 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
 }
 
+
+val localProperties = Properties()
+localProperties.load(rootProject.file("local.properties").inputStream())
+
 android {
     namespace = "com.example.visusltranslator"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
+    compileSdk = 37
+    buildFeatures {
+        compose = true
+        buildConfig = true
     }
 
     defaultConfig {
         applicationId = "com.example.visusltranslator"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField(
+            "String",
+            "GOOGLE_TRANSLATE_API_KEY",
+            "\"${localProperties["GOOGLE_TRANSLATE_API_KEY"]}\""
+        )
     }
 
     buildTypes {
@@ -31,9 +42,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-    buildFeatures {
-        compose = true
     }
 }
 
