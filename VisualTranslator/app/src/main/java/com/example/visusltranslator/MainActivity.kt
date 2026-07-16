@@ -1,4 +1,4 @@
-package com.schofielddevs.visuallearning
+package com.example.visusltranslator
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -8,10 +8,12 @@ import android.graphics.BitmapFactory
 import android.graphics.ImageFormat
 import android.graphics.Matrix
 import android.graphics.Rect
+import android.graphics.YuvImage
 import android.os.Bundle
 import android.text.Selection
 import android.text.Spannable
 import android.util.Log
+import android.view.Surface
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -27,7 +29,6 @@ import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.createBitmap
-import com.example.visusltranslator.OCRTFLite
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import okhttp3.Call
@@ -62,8 +63,8 @@ import kotlin.math.min
 class MainActivity : AppCompatActivity() {
 
     // ---------- CONFIG ----------
-    private val INPUT_W = 512
-    private val INPUT_H = 64
+    private val inputW = 512
+    private val inputH = 64
     // ----------------------------
 
     private lateinit var ocrTFLite: OCRTFLite
@@ -115,9 +116,10 @@ class MainActivity : AppCompatActivity() {
         processButton.setOnClickListener { processCroppedRegion() }
         retakeButton.setOnClickListener { returnToCamera() }
 
+        ocrTFLite = OCRTFLite(this)
         // Initialize OCRTFLite
         try {
-            ocrTFLite = OCRTFLite(this)
+            ocrTFLite.init(useGpu = true)
             Log.d(TAG, "✅ OCRTFLite initialized")
         } catch (e: Exception) {
             Log.e(TAG, "❌ Failed to init OCRTFLite: ${e.message}")
@@ -129,7 +131,7 @@ class MainActivity : AppCompatActivity() {
             if (text is Spannable) {
                 val start = Selection.getSelectionStart(text)
                 val end = Selection.getSelectionEnd(text)
-                if (start >= 0 && end > start) {
+                if (start in 0..<end) {
                     val selected = text.subSequence(start, end).toString().trim()
                     if (selected.isNotEmpty()) translateText(selected)
                 }
@@ -152,7 +154,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             imageCapture = ImageCapture.Builder()
-                .setTargetRotation(display?.rotation ?: android.view.Surface.ROTATION_0)
+                .setTargetRotation(display?.rotation ?: Surface.ROTATION_0)
                 .build()
 
             cameraProvider.unbindAll()
@@ -285,9 +287,9 @@ class MainActivity : AppCompatActivity() {
         saveMatToStorage(deskewed, "02_deskewed.jpg")
 
         // Step 2: Resize to model input size
-        Log.d(TAG, "📐 Resizing to ${INPUT_W}x${INPUT_H}")
+        Log.d(TAG, "📐 Resizing to ${inputW}x${inputH}")
         val resized = Mat()
-        Imgproc.resize(deskewed, resized, Size(INPUT_W.toDouble(), INPUT_H.toDouble()), 0.0, 0.0, Imgproc.INTER_AREA)
+        Imgproc.resize(deskewed, resized, Size(inputW.toDouble(), inputH.toDouble()), 0.0, 0.0, Imgproc.INTER_AREA)
         Log.d(TAG, "✅ Resize complete: ${resized.cols()}x${resized.rows()}")
         saveMatToStorage(resized, "03_resized.jpg")
 
@@ -309,7 +311,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "🤖 Running TFLite OCR...")
         val startTime = System.currentTimeMillis()
         val ocrText = try {
-            ocrTFLite.runTFLite(processedBitmap)
+            ocrTFLite.runOCR(processedBitmap)
         } catch (e: Exception) {
             Log.e(TAG, "❌ OCR failed: ${e.message}")
             e.printStackTrace()
@@ -350,7 +352,7 @@ class MainActivity : AppCompatActivity() {
         Imgproc.threshold(src, binary, 0.0, 255.0, Imgproc.THRESH_BINARY_INV + Imgproc.THRESH_OTSU)
         val nonZeroPixels = Core.countNonZero(binary)
         val textDensity = nonZeroPixels.toDouble() / (binary.rows() * binary.cols())
-        if (textDensity < 0.05 || textDensity > 0.6) {
+        if (textDensity !in 0.05..0.6) {
             binary.release()
             return src.clone()
         }
@@ -423,7 +425,7 @@ class MainActivity : AppCompatActivity() {
         for (contour in contours) {
             if (Imgproc.contourArea(contour) > 100) {
                 val rect = Imgproc.minAreaRect(MatOfPoint2f(*contour.toArray()))
-                val angle = rect.angle
+                var angle = rect.angle
                 if (rect.size.width < rect.size.height) angle += 90.0
                 if (angle > 45) angle -= 90
                 if (angle < -45) angle += 90
@@ -492,7 +494,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val bodyString = response.body?.string() ?: ""
+                val bodyString = response.body.string()
                 try {
                     val json = JSONObject(bodyString)
                     val translated = json.getJSONObject("data").getJSONArray("translations").getJSONObject(0).getString("translatedText")
@@ -519,7 +521,7 @@ class MainActivity : AppCompatActivity() {
                     yBuffer.get(nv21, 0, ySize)
                     vBuffer.get(nv21, ySize, vSize)
                     uBuffer.get(nv21, ySize + vSize, uSize)
-                    val yuvImage = android.graphics.YuvImage(nv21, ImageFormat.NV21, image.width, image.height, null)
+                    val yuvImage = YuvImage(nv21, ImageFormat.NV21, image.width, image.height, null)
                     val out = ByteArrayOutputStream()
                     yuvImage.compressToJpeg(Rect(0, 0, image.width, image.height), 100, out)
                     BitmapFactory.decodeByteArray(out.toByteArray(), 0, out.size())
@@ -543,5 +545,6 @@ class MainActivity : AppCompatActivity() {
         capturedBitmap?.recycle()
         textRecognizer.close()
         cameraExecutor.shutdown()
+        ocrTFLite.close()
     }
 }
