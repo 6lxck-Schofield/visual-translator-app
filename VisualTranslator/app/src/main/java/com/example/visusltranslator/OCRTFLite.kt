@@ -17,11 +17,11 @@ class OCRTFLite(private val context: Context) {
         private const val TAG = "OCRTFLite"
     }
     
-    private val IMG_W = 512
-    private val IMG_H = 64
-    private val CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -.,"
-    private val blankIndex = CHARS.length
-    private val idxToChar = CHARS.mapIndexed { i, c -> i to c }.toMap()
+    private val imageWidth = 512
+    private val imageHeight = 64
+    private val chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -.,"
+    private val blankIndex = chars.length
+    private val idxToChar = chars.mapIndexed { i, c -> i to c }.toMap()
     
     private val interpreter: Interpreter by lazy {
         Log.d(TAG, "🔧 Initializing TFLite interpreter")
@@ -58,17 +58,17 @@ class OCRTFLite(private val context: Context) {
         Log.d(TAG, "🎨 Preprocessing bitmap: ${bitmap.width}x${bitmap.height}")
         
         // 1. Resize to model input size
-        val resized = bitmap.scale(IMG_W, IMG_H)
-        Log.d(TAG, "📐 Resized to: ${IMG_W}x${IMG_H}")
+        val resized = bitmap.scale(imageWidth, imageHeight)
+        Log.d(TAG, "📐 Resized to: ${imageWidth}x${imageHeight}")
         
-        val input = ByteBuffer.allocateDirect(1 * IMG_H * IMG_W * 1 * 4)
+        val input = ByteBuffer.allocateDirect(1 * imageHeight * imageWidth * 1 * 4)
         input.order(ByteOrder.nativeOrder())
         
         // Collect pixel values first for normalization
-        val pixels = FloatArray(IMG_W * IMG_H)
+        val pixels = FloatArray(imageWidth * imageHeight)
         var idx = 0
-        for (y in 0 until IMG_H) {
-            for (x in 0 until IMG_W) {
+        for (y in 0 until imageHeight) {
+            for (x in 0 until imageWidth) {
                 val p = resized[x, y]
                 val r = Color.red(p)
                 val g = Color.green(p)
@@ -145,10 +145,10 @@ class OCRTFLite(private val context: Context) {
                     maxIdx = c
                 }
             }
-            
-            when {
-                maxIdx == blankIndex -> blankCount++
-                maxIdx == prev -> repeatCount++
+
+            when (maxIdx) {
+                blankIndex -> blankCount++
+                prev -> repeatCount++
                 else -> {
                     decoded.append(idxToChar[maxIdx])
                     charCount++
@@ -179,8 +179,8 @@ class OCRTFLite(private val context: Context) {
             Log.d(TAG, "⏱️ Preprocessing took ${preprocessTime}ms")
             
             // Output: [1, time, classes]
-            val timeSteps = IMG_W / 4 - 1  // matches your Python code
-            val numClasses = CHARS.length + 1  // +1 blank
+            val timeSteps = imageWidth / 4 - 1  // matches your Python code
+            val numClasses = chars.length + 1  // +1 blank
             Log.d(TAG, "📦 Allocating output: [1, $timeSteps, $numClasses]")
             val output = Array(1) { Array(timeSteps) { FloatArray(numClasses) } }
             
