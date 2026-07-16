@@ -12,7 +12,6 @@ okhttp = "5.4.0"
 activityCompose = "1.13.0"
 kotlin = "2.4.10"
 composeBom = "2026.06.01"
-tensorflowLiteGpu = "2.9.1"
 tfliteCpu = "2.9.1"
 tensorflowLite = "2.17.0"
 
@@ -38,9 +37,12 @@ androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "u
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
-tensorflow-lite-gpu = { module = "tensorflowLite:tensorflow-lite-gpu", version.ref = "tensorflowLiteGpu" }
+
 tflite-cpu = { module = "tensorflow-lite-interpreter:tflite-cpu", version.ref = "tfliteCpu" }
 tensorflow-lite = { group = "org.tensorflow", name = "tensorflow-lite", version.ref = "tensorflowLite" }
+tensorflow-lite-support = { group = "org.tensorflow", name = "tensorflow-lite-support" }
+tensorflow-lite-metadata = { group = "org.tensorflow", name = "tensorflow-lite-metadata" }
+tensorflow-tensorflow-lite-gpu = { group = "org.tensorflow", name = "tensorflow-lite-gpu" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

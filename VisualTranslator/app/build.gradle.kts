@@ -15,6 +15,7 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+        mlModelBinding = true
     }
 
     defaultConfig {
@@ -62,6 +63,9 @@ dependencies {
     implementation(libs.mlkit.text.recognition)
     implementation(libs.okhttp)
     implementation(project(":opencv"))
+    implementation(libs.tensorflow.lite.metadata)
+    implementation(libs.tensorflow.lite.support)
+    implementation(libs.tensorflow.tensorflow.lite.gpu)
     implementation(libs.tflite.cpu)
     implementation(libs.tensorflow.lite)
     testImplementation(libs.junit)
