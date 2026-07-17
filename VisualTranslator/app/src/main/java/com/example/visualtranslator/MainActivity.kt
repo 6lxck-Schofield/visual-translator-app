@@ -29,8 +29,6 @@ import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.createBitmap
-import com.google.mlkit.vision.text.TextRecognition
-import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaType
@@ -81,7 +79,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var translatedText: TextView
 
     private var capturedBitmap: Bitmap? = null
-    private val textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
     companion object {
         private const val TAG = "MainActivity"
@@ -543,7 +540,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         capturedBitmap?.recycle()
-        textRecognizer.close()
         cameraExecutor.shutdown()
         ocrTFLite.close()
     }

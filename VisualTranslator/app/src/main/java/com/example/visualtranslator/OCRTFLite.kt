@@ -35,7 +35,7 @@ class OCRTFLite(private val context: Context) {
 
     /**
      * Loads the TFLite model, attempting GPU delegate first (if [useGpu] is true)
-     * and falling back to multi-threaded CPU on failure.
+     * and falling back to multithreaded CPU on failure.
      */
     fun init(useGpu: Boolean = true) {
         val options = Interpreter.Options()
