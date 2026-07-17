@@ -1,4 +1,4 @@
-package com.example.visusltranslator
+package com.example.visualtranslator
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">VisuslTranslator</string>
+    <string name="captured_photo">Captured Photo</string>
+    <string name="retake">ReCapture</string>
+    <string name="capture_ocr">Capture Photo</string>
+    <string name="process">Process OCR\n</string>
+    <string name="translation_will_appear_here">Translation will appear here...</string>
+    <string name="ocr_result_placeholder">OCR results will appear here</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.visusltranslator
+package com.example.visualtranslator
 
 import android.Manifest
 import android.annotation.SuppressLint

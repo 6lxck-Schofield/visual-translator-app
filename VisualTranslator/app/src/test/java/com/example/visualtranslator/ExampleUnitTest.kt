@@ -1,4 +1,4 @@
-package com.example.visusltranslator
+package com.example.visualtranslator
 
 import org.junit.Test
 

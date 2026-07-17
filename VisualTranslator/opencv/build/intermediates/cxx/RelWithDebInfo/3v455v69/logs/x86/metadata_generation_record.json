@@ -5,47 +5,7 @@
   "tag": "release|x86"
 },
 {
-  "message": "rebuilding JSON E:\\Design4\\VisualTranslator\\opencv\\.cxx\\RelWithDebInfo\\3v455v69\\x86\\android_gradle_build.json due to:",
-  "file": "E:\\Design4\\VisualTranslator\\opencv\\libcxx_helper\\CMakeLists.txt",
-  "tag": "release|x86"
-},
-{
-  "message": "- no fingerprint file, will remove stale configuration folder",
-  "file": "E:\\Design4\\VisualTranslator\\opencv\\libcxx_helper\\CMakeLists.txt",
-  "tag": "release|x86"
-},
-{
-  "message": "removing stale contents from \u0027E:\\Design4\\VisualTranslator\\opencv\\.cxx\\RelWithDebInfo\\3v455v69\\x86\u0027",
-  "file": "E:\\Design4\\VisualTranslator\\opencv\\libcxx_helper\\CMakeLists.txt",
-  "tag": "release|x86"
-},
-{
-  "message": "created folder \u0027E:\\Design4\\VisualTranslator\\opencv\\.cxx\\RelWithDebInfo\\3v455v69\\x86\u0027",
-  "file": "E:\\Design4\\VisualTranslator\\opencv\\libcxx_helper\\CMakeLists.txt",
-  "tag": "release|x86"
-},
-{
-  "message": "executing cmake @echo off\n\"C:\\\\Users\\\\schofield\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\cmake\\\\3.22.1\\\\bin\\\\cmake.exe\" ^\n  \"-HE:\\\\Design4\\\\VisualTranslator\\\\opencv\\\\libcxx_helper\" ^\n  \"-DCMAKE_SYSTEM_NAME\u003dAndroid\" ^\n  \"-DCMAKE_EXPORT_COMPILE_COMMANDS\u003dON\" ^\n  \"-DCMAKE_SYSTEM_VERSION\u003d21\" ^\n  \"-DANDROID_PLATFORM\u003dandroid-21\" ^\n  \"-DANDROID_ABI\u003dx86\" ^\n  \"-DCMAKE_ANDROID_ARCH_ABI\u003dx86\" ^\n  \"-DANDROID_NDK\u003dC:\\\\Users\\\\schofield\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\ndk\\\\30.0.15729638\" ^\n  \"-DCMAKE_ANDROID_NDK\u003dC:\\\\Users\\\\schofield\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\ndk\\\\30.0.15729638\" ^\n  \"-DCMAKE_TOOLCHAIN_FILE\u003dC:\\\\Users\\\\schofield\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\ndk\\\\30.0.15729638\\\\build\\\\cmake\\\\android.toolchain.cmake\" ^\n  \"-DCMAKE_MAKE_PROGRAM\u003dC:\\\\Users\\\\schofield\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\cmake\\\\3.22.1\\\\bin\\\\ninja.exe\" ^\n  \"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003dE:\\\\Design4\\\\VisualTranslator\\\\opencv\\\\build\\\\intermediates\\\\cxx\\\\RelWithDebInfo\\\\3v455v69\\\\obj\\\\x86\" ^\n  \"-DCMAKE_RUNTIME_OUTPUT_DIRECTORY\u003dE:\\\\Design4\\\\VisualTranslator\\\\opencv\\\\build\\\\intermediates\\\\cxx\\\\RelWithDebInfo\\\\3v455v69\\\\obj\\\\x86\" ^\n  \"-DCMAKE_BUILD_TYPE\u003dRelWithDebInfo\" ^\n  \"-BE:\\\\Design4\\\\VisualTranslator\\\\opencv\\\\.cxx\\\\RelWithDebInfo\\\\3v455v69\\\\x86\" ^\n  -GNinja ^\n  \"-DANDROID_STL\u003dc++_shared\"\n",
-  "file": "E:\\Design4\\VisualTranslator\\opencv\\libcxx_helper\\CMakeLists.txt",
-  "tag": "release|x86"
-},
-{
-  "message": "@echo off\n\"C:\\\\Users\\\\schofield\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\cmake\\\\3.22.1\\\\bin\\\\cmake.exe\" ^\n  \"-HE:\\\\Design4\\\\VisualTranslator\\\\opencv\\\\libcxx_helper\" ^\n  \"-DCMAKE_SYSTEM_NAME\u003dAndroid\" ^\n  \"-DCMAKE_EXPORT_COMPILE_COMMANDS\u003dON\" ^\n  \"-DCMAKE_SYSTEM_VERSION\u003d21\" ^\n  \"-DANDROID_PLATFORM\u003dandroid-21\" ^\n  \"-DANDROID_ABI\u003dx86\" ^\n  \"-DCMAKE_ANDROID_ARCH_ABI\u003dx86\" ^\n  \"-DANDROID_NDK\u003dC:\\\\Users\\\\schofield\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\ndk\\\\30.0.15729638\" ^\n  \"-DCMAKE_ANDROID_NDK\u003dC:\\\\Users\\\\schofield\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\ndk\\\\30.0.15729638\" ^\n  \"-DCMAKE_TOOLCHAIN_FILE\u003dC:\\\\Users\\\\schofield\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\ndk\\\\30.0.15729638\\\\build\\\\cmake\\\\android.toolchain.cmake\" ^\n  \"-DCMAKE_MAKE_PROGRAM\u003dC:\\\\Users\\\\schofield\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\cmake\\\\3.22.1\\\\bin\\\\ninja.exe\" ^\n  \"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003dE:\\\\Design4\\\\VisualTranslator\\\\opencv\\\\build\\\\intermediates\\\\cxx\\\\RelWithDebInfo\\\\3v455v69\\\\obj\\\\x86\" ^\n  \"-DCMAKE_RUNTIME_OUTPUT_DIRECTORY\u003dE:\\\\Design4\\\\VisualTranslator\\\\opencv\\\\build\\\\intermediates\\\\cxx\\\\RelWithDebInfo\\\\3v455v69\\\\obj\\\\x86\" ^\n  \"-DCMAKE_BUILD_TYPE\u003dRelWithDebInfo\" ^\n  \"-BE:\\\\Design4\\\\VisualTranslator\\\\opencv\\\\.cxx\\\\RelWithDebInfo\\\\3v455v69\\\\x86\" ^\n  -GNinja ^\n  \"-DANDROID_STL\u003dc++_shared\"\n",
-  "file": "E:\\Design4\\VisualTranslator\\opencv\\libcxx_helper\\CMakeLists.txt",
-  "tag": "release|x86"
-},
-{
-  "message": "Received process result: 0",
-  "file": "E:\\Design4\\VisualTranslator\\opencv\\libcxx_helper\\CMakeLists.txt",
-  "tag": "release|x86"
-},
-{
-  "message": "Exiting generation of E:\\Design4\\VisualTranslator\\opencv\\.cxx\\RelWithDebInfo\\3v455v69\\x86\\compile_commands.json.bin normally",
-  "file": "E:\\Design4\\VisualTranslator\\opencv\\libcxx_helper\\CMakeLists.txt",
-  "tag": "release|x86"
-},
-{
-  "message": "done executing cmake",
+  "message": "JSON \u0027E:\\Design4\\VisualTranslator\\opencv\\.cxx\\RelWithDebInfo\\3v455v69\\x86\\android_gradle_build.json\u0027 was up-to-date",
   "file": "E:\\Design4\\VisualTranslator\\opencv\\libcxx_helper\\CMakeLists.txt",
   "tag": "release|x86"
 },

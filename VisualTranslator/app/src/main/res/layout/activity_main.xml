@@ -1,0 +1,108 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- Camera Preview (visible initially) -->
+    <androidx.camera.view.PreviewView
+        android:id="@+id/previewView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Captured Image View (hidden initially, shown after capture) -->
+    <ImageView
+        android:id="@+id/capturedImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        android:contentDescription="@string/captured_photo" />
+
+    <!-- Crop Selector Overlay (shown after capture) -->
+    <com.example.visualtranslator.CropSelectorView
+        android:id="@+id/cropSelectorView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <!-- Button Container for bottom controls -->
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="32dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <!-- Retake button (shown in crop mode) -->
+        <Button
+            android:id="@+id/retakeButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/retake"
+            android:visibility="gone" />
+
+        <!-- Capture button (shown in camera mode) -->
+        <Button
+            android:id="@+id/captureButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/capture_ocr" />
+
+        <!-- Process button (shown in crop mode) -->
+        <Button
+            android:id="@+id/processButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/process"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Translation Result Box -->
+    <TextView
+        android:id="@+id/translatedText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/buttonContainer"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#CC000000"
+        android:elevation="4dp"
+        android:maxLines="3"
+        android:padding="16dp"
+        android:scrollbars="vertical"
+        android:text="@string/translation_will_appear_here"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <!-- OCR Result Box -->
+    <TextView
+        android:id="@+id/ocrResultText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/translatedText"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#CC000000"
+        android:elevation="4dp"
+        android:longClickable="true"
+        android:maxLines="3"
+        android:padding="16dp"
+        android:scrollbars="vertical"
+        android:text="@string/ocr_result_placeholder"
+        android:textColor="#FFFFFF"
+        android:textIsSelectable="true"
+        android:textSize="16sp" />
+
+</RelativeLayout>

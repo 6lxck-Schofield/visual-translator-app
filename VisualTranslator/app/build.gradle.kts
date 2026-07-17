@@ -10,7 +10,7 @@ val localProperties = Properties()
 localProperties.load(rootProject.file("local.properties").inputStream())
 
 android {
-    namespace = "com.example.visusltranslator"
+    namespace = "com.example.visualtranslator"
     compileSdk = 37
     buildFeatures {
         compose = true
@@ -19,7 +19,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.visusltranslator"
+        applicationId = "com.example.visualtranslator"
         minSdk = 30
         targetSdk = 37
         versionCode = 1
