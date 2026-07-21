@@ -83,6 +83,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "MainActivity"
+        private const val REQUEST_CODE_PERMISSIONS = 1001
         init {
             try {
                 System.loadLibrary("opencv_java4")
@@ -111,7 +112,7 @@ class MainActivity : AppCompatActivity() {
         resultsPanel.visibility = View.GONE
 
         if (allPermissionsGranted()) startCamera()
-        else ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 1001)
+        else ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), REQUEST_CODE_PERMISSIONS)
 
         captureButton.setOnClickListener { takePhoto() }
         processButton.setOnClickListener { processCroppedRegion() }
@@ -145,6 +146,22 @@ class MainActivity : AppCompatActivity() {
     private fun allPermissionsGranted() =
         ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
                 PackageManager.PERMISSION_GRANTED
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE_PERMISSIONS) {
+            if (allPermissionsGranted()) {
+                startCamera()
+            } else {
+                Log.e(TAG, "❌ Permissions not granted by the user.")
+                // Optionally show a toast or dialog here
+            }
+        }
+    }
 
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
