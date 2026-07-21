@@ -1,9 +1,10 @@
 package com.example.visualtranslator
+
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
 import org.tensorflow.lite.Interpreter
-import org.tensorflow.lite.gpu.GpuDelegate
+//import org.tensorflow.lite.gpu.GpuDelegate
 import java.io.FileInputStream
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -11,13 +12,14 @@ import java.nio.channels.FileChannel
 import kotlin.math.min
 import androidx.core.graphics.scale
 import org.tensorflow.lite.Tensor.QuantizationParams
+//import org.tensorflow.lite.gpu.CompatibilityList
 
 class OCRTFLite(private val context: Context) {
 
     companion object {
         private const val TAG = "OCRTFLite"
 
-        private const val MODEL_FILENAME = "prediction_ocr_model_final.tflite"
+        private const val MODEL_FILENAME = "prediction_ocr_model_final1.tflite"
         private const val INPUT_W = 512
         private const val INPUT_H = 64
         private const val TIMESTEPS = 127
@@ -28,7 +30,7 @@ class OCRTFLite(private val context: Context) {
     }
 
     private var tflite: Interpreter? = null
-    private var gpuDelegate: GpuDelegate? = null
+    //private var gpuDelegate: GpuDelegate? = null
 
     val isReady: Boolean
         get() = tflite != null
@@ -37,9 +39,14 @@ class OCRTFLite(private val context: Context) {
      * Loads the TFLite model, attempting GPU delegate first (if [useGpu] is true)
      * and falling back to multithreaded CPU on failure.
      */
-    fun init(useGpu: Boolean = true) {
-        val options = Interpreter.Options()
+    fun init() {
+        val options = Interpreter.Options().apply {
+            this.setNumThreads(4)
+        }
+        val modelBuffer = loadModelFile(MODEL_FILENAME)
+        tflite = Interpreter(modelBuffer, options)
 
+/*
         if (useGpu) {
             try {
                 gpuDelegate = GpuDelegate()
@@ -74,7 +81,7 @@ class OCRTFLite(private val context: Context) {
                 throw e
             }
         }
-
+*/
         logModelIO()
     }
 
@@ -273,8 +280,8 @@ class OCRTFLite(private val context: Context) {
 
     /** Releases the interpreter and GPU delegate. Call from onDestroy(). */
     fun close() {
-        gpuDelegate?.close()
-        gpuDelegate = null
+        //gpuDelegate?.close()
+        //gpuDelegate = null
         tflite?.close()
         tflite = null
     }

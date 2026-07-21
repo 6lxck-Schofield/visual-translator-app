@@ -1,108 +1,219 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+<?xml version="1.0" encoding="utf-8"?>
 
-    <!-- Camera Preview (visible initially) -->
-    <androidx.camera.view.PreviewView
-        android:id="@+id/previewView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+<androidx.constraintlayout.widget.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="#000000">
 
-    <!-- Captured Image View (hidden initially, shown after capture) -->
-    <ImageView
-        android:id="@+id/capturedImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitCenter"
-        android:visibility="gone"
-        android:contentDescription="@string/captured_photo" />
+<!-- CAMERA PREVIEW -->
+<androidx.camera.view.PreviewView
+    android:id="@+id/previewView"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:background="#000000"
+    app:implementationMode="performance"
+    app:scaleType="fillCenter"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Crop Selector Overlay (shown after capture) -->
-    <com.example.visualtranslator.CropSelectorView
-        android:id="@+id/cropSelectorView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
+<!-- TOP BAR -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/topBar"
+    android:layout_width="0dp"
+    android:layout_height="64dp"
+    android:background="#B3000000"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Button Container for bottom controls -->
-    <LinearLayout
-        android:id="@+id/buttonContainer"
-        style="?android:attr/buttonBarStyle"
+    <TextView
+        android:id="@+id/appTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="32dp"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:text="@string/visual_learning"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-        <!-- Retake button (shown in crop mode) -->
-        <Button
-            android:id="@+id/retakeButton"
-            style="?android:attr/buttonBarButtonStyle"
+    <TextView
+        android:id="@+id/scanHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/scan_text"
+        android:textColor="#BDBDBD"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!-- CAPTURE BUTTON AREA -->
+<LinearLayout
+    android:id="@+id/cameraControls"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#CC000000"
+    android:paddingTop="12dp"
+    android:paddingBottom="20dp"
+    app:layout_constraintBottom_toBottomOf="parent">
+
+    <TextView
+        android:id="@+id/captureHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/point_your_camera_at_text"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:layout_marginBottom="12dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/captureButton"
+        android:layout_width="76dp"
+        android:layout_height="76dp"
+        android:background="@drawable/capture_button"
+        android:text=""
+        android:elevation="8dp"
+        android:contentDescription="@string/capture_image" />
+
+</LinearLayout>
+
+<!-- CAPTURED IMAGE / CROP MODE -->
+<android.widget.ImageView
+    android:id="@+id/capturedImageView"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:visibility="gone"
+    android:scaleType="fitCenter"
+    android:background="#000000"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+<!-- CROP SELECTOR -->
+<com.example.visualtranslator.CropSelectorView
+    android:id="@+id/cropSelectorView"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:visibility="gone"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+<!-- PROCESS BUTTON -->
+<androidx.appcompat.widget.AppCompatButton
+    android:id="@+id/processButton"
+    android:layout_width="0dp"
+    android:layout_height="56dp"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginBottom="16dp"
+    android:text="@string/extract_text"
+    android:textAllCaps="false"
+    android:textColor="#000000"
+    android:textSize="16sp"
+    android:textStyle="bold"
+    android:background="@drawable/primary_button"
+    android:visibility="gone"
+    app:layout_constraintBottom_toTopOf="@id/retakeButton"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+<!-- RETAKE BUTTON -->
+<androidx.appcompat.widget.AppCompatButton
+    android:id="@+id/retakeButton"
+    android:layout_width="0dp"
+    android:layout_height="52dp"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginBottom="24dp"
+    android:text="@string/retake"
+    android:textAllCaps="false"
+    android:textColor="#FFFFFF"
+    android:textSize="15sp"
+    android:background="@drawable/secondary_button"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+<!-- RESULTS PANEL -->
+<ScrollView
+    android:id="@+id/resultsPanel"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_margin="16dp"
+    android:visibility="visible"
+    android:background="@drawable/results_panel"
+    android:padding="16dp"
+    app:layout_constraintTop_toBottomOf="@id/topBar"
+    app:layout_constraintBottom_toTopOf="@id/cameraControls"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="@string/retake"
-            android:visibility="gone" />
+            android:text="@string/recognized_text"
+            android:textColor="#BDBDBD"
+            android:textSize="13sp"
+            android:textStyle="bold" />
 
-        <!-- Capture button (shown in camera mode) -->
-        <Button
-            android:id="@+id/captureButton"
-            style="?android:attr/buttonBarButtonStyle"
+        <TextView
+            android:id="@+id/ocrResultText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/ocr_result_placeholder"
+            android:textColor="#FFFFFF"
+            android:textIsSelectable="true"
+            android:textSize="17sp"
+            android:lineSpacingExtra="4dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="18dp"
+            android:background="#333333" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/capture_ocr" />
+            android:text="@string/zulu_translation"
+            android:textColor="#BDBDBD"
+            android:textSize="13sp"
+            android:textStyle="bold" />
 
-        <!-- Process button (shown in crop mode) -->
-        <Button
-            android:id="@+id/processButton"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/translatedText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/process"
-            android:visibility="gone" />
+            android:layout_marginTop="8dp"
+            android:text="@string/translation_will_appear_here"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp"
+            android:lineSpacingExtra="4dp" />
+
     </LinearLayout>
 
-    <!-- Translation Result Box -->
-    <TextView
-        android:id="@+id/translatedText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/buttonContainer"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="#CC000000"
-        android:elevation="4dp"
-        android:maxLines="3"
-        android:padding="16dp"
-        android:scrollbars="vertical"
-        android:text="@string/translation_will_appear_here"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp" />
-
-    <!-- OCR Result Box -->
-    <TextView
-        android:id="@+id/ocrResultText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/translatedText"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="#CC000000"
-        android:elevation="4dp"
-        android:longClickable="true"
-        android:maxLines="3"
-        android:padding="16dp"
-        android:scrollbars="vertical"
-        android:text="@string/ocr_result_placeholder"
-        android:textColor="#FFFFFF"
-        android:textIsSelectable="true"
-        android:textSize="16sp" />
-
-</RelativeLayout>
+</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

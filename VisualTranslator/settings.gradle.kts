@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "VisuslTranslator"
+rootProject.name = "VisualTranslator"
 include(":app")
 include(":opencv")

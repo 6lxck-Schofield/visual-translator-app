@@ -53,7 +53,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
+//import java.util.concurrent.Executors
 import kotlin.math.abs
 import kotlin.math.min
 
@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var imageCapture: ImageCapture
     private lateinit var ocrResultText: TextView
     private lateinit var translatedText: TextView
+    private lateinit var resultsPanel: View
 
     private var capturedBitmap: Bitmap? = null
 
@@ -96,6 +97,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        resultsPanel = findViewById(R.id.resultsPanel)
+
         previewView = findViewById(R.id.previewView)
         capturedImageView = findViewById(R.id.capturedImageView)
         cropSelectorView = findViewById(R.id.cropSelectorView)
@@ -104,7 +107,8 @@ class MainActivity : AppCompatActivity() {
         retakeButton = findViewById(R.id.retakeButton)
         ocrResultText = findViewById(R.id.ocrResultText)
         translatedText = findViewById(R.id.translatedText)
-        cameraExecutor = Executors.newSingleThreadExecutor()
+
+        resultsPanel.visibility = View.GONE
 
         if (allPermissionsGranted()) startCamera()
         else ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 1001)
@@ -116,7 +120,7 @@ class MainActivity : AppCompatActivity() {
         ocrTFLite = OCRTFLite(this)
         // Initialize OCRTFLite
         try {
-            ocrTFLite.init(useGpu = true)
+            ocrTFLite.init(/*useGpu = true*/)
             Log.d(TAG, "✅ OCRTFLite initialized")
         } catch (e: Exception) {
             Log.e(TAG, "❌ Failed to init OCRTFLite: ${e.message}")
@@ -193,6 +197,7 @@ class MainActivity : AppCompatActivity() {
     private fun showCropMode() {
         previewView.visibility = View.GONE
         captureButton.visibility = View.GONE
+        resultsPanel.visibility = View.GONE
 
         capturedImageView.visibility = View.VISIBLE
         cropSelectorView.visibility = View.VISIBLE
@@ -200,6 +205,7 @@ class MainActivity : AppCompatActivity() {
         retakeButton.visibility = View.VISIBLE
 
         capturedImageView.setImageBitmap(capturedBitmap)
+
         capturedImageView.post {
             cropSelectorView.setImageDimensions(
                 capturedImageView.width,
@@ -209,7 +215,6 @@ class MainActivity : AppCompatActivity() {
             )
         }
     }
-
     private fun returnToCamera() {
         capturedBitmap?.recycle()
         capturedBitmap = null
@@ -222,10 +227,11 @@ class MainActivity : AppCompatActivity() {
         processButton.visibility = View.GONE
         retakeButton.visibility = View.GONE
 
+        resultsPanel.visibility = View.GONE
+
         ocrResultText.text = getString(R.string.ocr_result_placeholder)
         translatedText.text = getString(R.string.translation_will_appear_here)
     }
-
     // ---------- Simplified Processing Pipeline ----------
     private fun processCroppedRegion() {
         Log.d(TAG, "📸 Starting processCroppedRegion()")
@@ -319,13 +325,20 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "📝 OCR result: '$ocrText' (${ocrText.length} chars)")
 
         runOnUiThread {
+            // Hide crop interface
+            capturedImageView.visibility = View.GONE
+            cropSelectorView.visibility = View.GONE
+            processButton.visibility = View.GONE
+            retakeButton.visibility = View.GONE
+
+            // Show OCR results
+            resultsPanel.visibility = View.VISIBLE
+
             ocrResultText.text = ocrText.trim()
             translatedText.text = ""
+
             if (ocrText.isNotBlank()) {
-                Log.d(TAG, "🌐 Triggering translation for: '$ocrText'")
                 translateText(ocrText)
-            } else {
-                Log.w(TAG, "⚠️ OCR result is blank, skipping translation")
             }
         }
 

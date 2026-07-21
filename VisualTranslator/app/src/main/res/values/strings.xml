@@ -1,9 +1,16 @@
 <resources>
-    <string name="app_name">VisuslTranslator</string>
+    <string name="app_name">VisualTranslator</string>
     <string name="captured_photo">Captured Photo</string>
     <string name="retake">ReCapture</string>
     <string name="capture_ocr">Capture Photo</string>
     <string name="process">Process OCR\n</string>
     <string name="translation_will_appear_here">Translation will appear here…</string>
     <string name="ocr_result_placeholder">OCR results will appear here</string>
+    <string name="scan_text">Scan text</string>
+    <string name="visual_learning">Visual Learning</string>
+    <string name="point_your_camera_at_text">Point your camera at text</string>
+    <string name="capture_image">Capture image</string>
+    <string name="extract_text">Extract Text</string>
+    <string name="zulu_translation">Zulu translation</string>
+    <string name="recognized_text">Recognized text</string>
 </resources>
