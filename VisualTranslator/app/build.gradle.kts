@@ -72,5 +72,6 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     implementation("com.google.ai.edge.litert:litert-metadata:1.4.2")
     implementation("com.google.ai.edge.litert:litert-support:1.4.2")
-    implementation("com.google.ai.edge.litert:litert:1.4.2")
+    implementation("com.google.ai.edge.litert:litert:2.1.6")
+    implementation("org.tensorflow:tensorflow-lite-select-tf-ops:2.16.1")
 }
